@@ -120,25 +120,30 @@ user_input = st.text_area("✍️ Enter your review below:", height=150, placeho
 # -------------------------------
 # Prediction
 # -------------------------------
+# -------------------------------
+# Prediction
+# -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
+
     if user_input.strip():
         clean_text = user_input.strip()
-    
+
         # --- Smart validation ---
         word_count = len(clean_text.split())
         char_count = len(clean_text)
         has_letters = any(c.isalpha() for c in clean_text)
         has_valid_chars = any(c.isalnum() for c in clean_text)
-    
+
+        # --- Check if input looks like a real review ---
         if word_count < 3 or not has_letters or not has_valid_chars:
             st.warning("⚠️ Please enter a meaningful review (at least a few words describing an experience).")
-    
+
         else:
             # --- Valid input: Run the model ---
             input_data = tf.constant([user_input])
             prediction = model.predict(input_data)[0][0]
             sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
-    
+
             # --- Show Result Card ---
             if prediction > 0.5:
                 st.markdown(f"""
@@ -152,10 +157,10 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
                         <p class='negative'>❌ {sentiment}</p>
                     </div>
                 """, unsafe_allow_html=True)
-    
-            # --- Optional metrics (inside same else) ---
+
+            # --- Optional metrics ---
             st.markdown(f"<p style='color:#888;'>Words: {word_count} | Characters: {char_count}</p>", unsafe_allow_html=True)
-    
+
     else:
         st.warning("⚠️ Please enter a review before analyzing.")
 
