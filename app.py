@@ -118,7 +118,6 @@ st.markdown("<p class='subtitle'>An intelligent NLP model built with Transfer Le
 user_input = st.text_area("✍️ Enter your review below:", height=150, placeholder="Example: The meal was absolutely fantastic, will definitely come again!")
 
 
-# -------------------------------
 # Prediction
 # -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
@@ -186,6 +185,7 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
