@@ -1,0 +1,19 @@
+# TensorFlow (CPU version)
+tensorflow==2.20.0
+
+# TensorFlow Hub
+tensorflow-hub==0.16.1
+
+# tensorflow-text تم إلغاءه لأنه غير متوافق مع Python 3.13 و TensorFlow 2.20
+
+# Data processing & ML
+numpy
+pandas
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+
+# Web app
+streamlit
