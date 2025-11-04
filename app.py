@@ -118,64 +118,46 @@ st.markdown("<p class='subtitle'>An intelligent NLP model built with Transfer Le
 user_input = st.text_area("✍️ Enter your review below:", height=150, placeholder="Example: The meal was absolutely fantastic, will definitely come again!")
 
 
+# -------------------------------
 # Prediction
 # -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
 
     if user_input.strip():
-        # Convert input to TensorFlow constant
-        input_data = tf.constant([user_input])
-        prediction = model.predict(input_data)[0][0]
-        sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
+        clean_text = user_input.strip()
 
-        # Count metrics
-        word_count = len(user_input.split())
-        char_count = len(user_input)
+        # --- Smart validation ---
+        word_count = len(clean_text.split())
+        char_count = len(clean_text)
+        has_letters = any(c.isalpha() for c in clean_text)
+        has_valid_chars = any(c.isalnum() for c in clean_text)
 
-        # Show sentiment result
-        if prediction > 0.5:
-            st.markdown(f"""
-                <div class='result-card'>
-                    <p class='positive'>✅ {sentiment}</p>
-                </div>
-            """, unsafe_allow_html=True)
+        # --- Check if input looks like a real review ---
+        if word_count < 3 or not has_letters or not has_valid_chars:
+            st.warning("⚠️ Please enter a meaningful review (at least a few words describing an experience).")
+
         else:
-            st.markdown(f"""
-                <div class='result-card'>
-                    <p class='negative'>❌ {sentiment}</p>
-                </div>
-            """, unsafe_allow_html=True)
+            # --- Valid input: Run the model ---
+            input_data = tf.constant([user_input])
+            prediction = model.predict(input_data)[0][0]
+            sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
 
-        # Confidence Gauge
-        fig = go.Figure(go.Indicator(
-            mode="gauge+number",
-            value=prediction * 100,
-            domain={'x': [0, 1], 'y': [0, 1]},
-            title={'text': "Confidence (%)", 'font': {'color': '#E1E1E1'}},
-            gauge={
-                'axis': {'range': [0, 100], 'tickcolor': '#E1E1E1'},
-                'bar': {'color': "#4DD0E1"},
-                'bgcolor': "black",
-                'steps': [
-                    {'range': [0, 50], 'color': "#3E1F47"},
-                    {'range': [50, 100], 'color': "#10323E"}
-                ],
-            }
-        ))
-        fig.update_layout(
-            height=250,
-            margin=dict(l=20, r=20, t=20, b=20),
-            paper_bgcolor="#0E1117",
-            font={'color': '#E1E1E1'}
-        )
-        st.plotly_chart(fig, use_container_width=True)
+            # --- Show Result Card ---
+            if prediction > 0.5:
+                st.markdown(f"""
+                    <div class='result-card'>
+                        <p class='positive'>✅ {sentiment}</p>
+                    </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                    <div class='result-card'>
+                        <p class='negative'>❌ {sentiment}</p>
+                    </div>
+                """, unsafe_allow_html=True)
 
-        # Metrics
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown(f"<div class='metric-box'><h4>📝 Words</h4><h3>{word_count}</h3></div>", unsafe_allow_html=True)
-        with col2:
-            st.markdown(f"<div class='metric-box'><h4>🔠 Characters</h4><h3>{char_count}</h3></div>", unsafe_allow_html=True)
+            # --- Optional metrics ---
+            st.markdown(f"<p style='color:#888;'>Words: {word_count} | Characters: {char_count}</p>", unsafe_allow_html=True)
 
     else:
         st.warning("⚠️ Please enter a review before analyzing.")
@@ -185,6 +167,7 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
