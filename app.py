@@ -132,12 +132,14 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
     
         if word_count < 3 or not has_letters or not has_valid_chars:
             st.warning("⚠️ Please enter a meaningful review (at least a few words describing an experience).")
+    
         else:
-            # Valid input → Run model
+            # --- Valid input: Run the model ---
             input_data = tf.constant([user_input])
             prediction = model.predict(input_data)[0][0]
             sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
     
+            # --- Show Result Card ---
             if prediction > 0.5:
                 st.markdown(f"""
                     <div class='result-card'>
@@ -150,6 +152,12 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
                         <p class='negative'>❌ {sentiment}</p>
                     </div>
                 """, unsafe_allow_html=True)
+    
+            # --- Optional metrics (inside same else) ---
+            st.markdown(f"<p style='color:#888;'>Words: {word_count} | Characters: {char_count}</p>", unsafe_allow_html=True)
+    
+    else:
+        st.warning("⚠️ Please enter a review before analyzing.")
 
 
         # Confidence Gauge
@@ -187,6 +195,7 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
