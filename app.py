@@ -122,42 +122,34 @@ user_input = st.text_area("✍️ Enter your review below:", height=150, placeho
 # -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
     if user_input.strip():
-        # --- Smart validation for meaningful input ---
         clean_text = user_input.strip()
     
-        # شرط: لازم على الأقل 3 كلمات
+        # --- Smart validation ---
         word_count = len(clean_text.split())
-    
-        # شرط: يكون فيه حروف مش أرقام فقط
+        char_count = len(clean_text)
         has_letters = any(c.isalpha() for c in clean_text)
-    
-        # شرط: ما يكونش gibberish أو رموز
         has_valid_chars = any(c.isalnum() for c in clean_text)
     
         if word_count < 3 or not has_letters or not has_valid_chars:
             st.warning("⚠️ Please enter a meaningful review (at least a few words describing an experience).")
         else:
-            # لو النص صالح للتحليل
+            # Valid input → Run model
             input_data = tf.constant([user_input])
             prediction = model.predict(input_data)[0][0]
             sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
-
-
-        word_count = len(user_input.split())
-        char_count = len(user_input)
-
-        if prediction > 0.5:
-            st.markdown(f"""
-                <div class='result-card'>
-                    <p class='positive'>✅ {sentiment}</p>
-                </div>
-            """, unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-                <div class='result-card'>
-                    <p class='negative'>❌ {sentiment}</p>
-                </div>
-            """, unsafe_allow_html=True)
+    
+            if prediction > 0.5:
+                st.markdown(f"""
+                    <div class='result-card'>
+                        <p class='positive'>✅ {sentiment}</p>
+                    </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                    <div class='result-card'>
+                        <p class='negative'>❌ {sentiment}</p>
+                    </div>
+                """, unsafe_allow_html=True)
 
 
         # Confidence Gauge
@@ -195,5 +187,6 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
