@@ -54,7 +54,23 @@ You can try the live app here:
 - Click **"🚀 Analyze Sentiment"**.
 - View the predicted sentiment, confidence gauge, and review metrics.
 
+---
 
 ## 📸 Screenshots
-
 ![App Page](AppScreen.png)
+
+
+---
+
+## 👨‍💻 Author
+
+**Ahmed Ahmed Mohamed Shlaby**  
+📍 Egypt, Cairo  
+📧 [shalabyahmed299@gmail.com](mailto:shalabyahmed299@gmail.com)  
+
+🔗 [GitHub](https://github.com/ahmedshlaby) | [LinkedIn](https://www.linkedin.com/in/ahmed-shlaby22/)
+
+---
+
+⭐ *If you like this project, don’t forget to give it a star on GitHub!*
+
