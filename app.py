@@ -156,17 +156,46 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
                     </div>
                 """, unsafe_allow_html=True)
 
-            # --- Optional metrics ---
-            st.markdown(f"<p style='color:#888;'>Words: {word_count} | Characters: {char_count}</p>", unsafe_allow_html=True)
-
-    else:
-        st.warning("⚠️ Please enter a review before analyzing.")
+            # Confidence Gauge
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=prediction * 100,
+                domain={'x': [0, 1], 'y': [0, 1]},
+                title={'text': "Confidence (%)", 'font': {'color': '#E1E1E1'}},
+                gauge={
+                    'axis': {'range': [0, 100], 'tickcolor': '#E1E1E1'},
+                    'bar': {'color': "#4DD0E1"},
+                    'bgcolor': "black",
+                    'steps': [
+                        {'range': [0, 50], 'color': "#3E1F47"},
+                        {'range': [50, 100], 'color': "#10323E"}
+                    ],
+                }
+            ))
+            fig.update_layout(
+                height=250,
+                margin=dict(l=20, r=20, t=20, b=20),
+                paper_bgcolor="#0E1117",
+                font={'color': '#E1E1E1'}
+            )
+            st.plotly_chart(fig, use_container_width=True)
+    
+            # Metrics
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"<div class='metric-box'><h4>📝 Words</h4><h3>{word_count}</h3></div>", unsafe_allow_html=True)
+            with col2:
+                st.markdown(f"<div class='metric-box'><h4>🔠 Characters</h4><h3>{char_count}</h3></div>", unsafe_allow_html=True)
+    
+        else:
+            st.warning("⚠️ Please enter a review before analyzing.")
 
 # -------------------------------
 # Footer
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
