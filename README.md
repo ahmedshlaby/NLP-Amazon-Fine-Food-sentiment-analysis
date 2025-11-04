@@ -35,8 +35,8 @@ You can try the live app here:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ahmedshlaby/amazon-sentiment-analysis.git
-   cd amazon-sentiment-analysis
+   git clone https://github.com/ahmedshlaby/NLP-Amazon-Fine-Food-sentiment-analysis.git
+   cd NLP-Amazon-Fine-Food-sentiment-analysis
 
 2. **Install required libraries**
    ```bash
@@ -46,11 +46,13 @@ You can try the live app here:
    ```bash
    streamlit run app.py
 
+---
+
 ## 📝 Usage
 
-Enter your review in the text area.
+- Enter your review in the text area.
+- Click **"🚀 Analyze Sentiment"**.
+- View the predicted sentiment, confidence gauge, and review metrics.
 
-Click "🚀 Analyze Sentiment".
 
-View the predicted sentiment, confidence gauge, and review metrics.
-   
+
