@@ -55,4 +55,6 @@ You can try the live app here:
 - View the predicted sentiment, confidence gauge, and review metrics.
 
 
+## 📸 Screenshots
 
+![App Page](AppScreen.png)
