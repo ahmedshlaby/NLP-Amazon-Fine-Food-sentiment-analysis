@@ -117,127 +117,7 @@ st.markdown("<p class='subtitle'>An intelligent NLP model built with Transfer Le
 # -------------------------------
 user_input = st.text_area("✍️ Enter your review below:", height=150, placeholder="Example: The meal was absolutely fantastic, will definitely come again!")
 
-# app.py
-import streamlit as st
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import tensorflow as tf
-import tensorflow_hub as hub
-import plotly.graph_objects as go
 
-# Custom USE Embedding Layer
-# -------------------------------
-class USE_Embedding(tf.keras.layers.Layer):
-    def __init__(self, link="https://tfhub.dev/google/universal-sentence-encoder/4", trainable=False, **kwargs):
-        super().__init__(**kwargs)
-        self.embedding_layer = hub.KerasLayer(link, trainable=trainable)
-
-    def call(self, inputs):
-        return self.embedding_layer(inputs)
-
-# -------------------------------
-# Load Model
-# -------------------------------
-@st.cache_resource
-def load_sentiment_model():
-    model = tf.keras.models.load_model(
-        "sentiment_model.h5",
-        custom_objects={
-            'USE_Embedding': USE_Embedding,
-            'KerasLayer': hub.KerasLayer
-        }
-    )
-    return model
-
-model = load_sentiment_model()
-
-# -------------------------------
-# Streamlit Page Config
-# -------------------------------
-st.set_page_config(page_title="AI Sentiment Analysis", page_icon="💬", layout="wide")
-
-# -------------------------------
-# Custom Dark CSS
-# -------------------------------
-st.markdown("""
-    <style>
-    body {
-        background-color: #0E1117;
-        color: #E1E1E1;
-        font-family: 'Poppins', sans-serif;
-    }
-    .main {
-        background-color: #0E1117;
-        color: #E1E1E1;
-    }
-    .title {
-        text-align: center;
-        color: #4DD0E1;
-        font-size: 2.4em;
-        font-weight: 700;
-        margin-bottom: 10px;
-        text-shadow: 0 0 10px #4DD0E1;
-    }
-    .subtitle {
-        text-align: center;
-        color: #bbb;
-        font-size: 1.1em;
-        margin-bottom: 40px;
-    }
-    .result-card {
-        background: linear-gradient(135deg, #1B263B 0%, #0E1117 100%);
-        border: 1px solid #4DD0E1;
-        border-radius: 16px;
-        padding: 25px;
-        box-shadow: 0px 0px 12px rgba(77, 208, 225, 0.3);
-        text-align: center;
-        margin-top: 20px;
-    }
-    .positive {
-        color: #4DD0E1;
-        font-size: 1.6em;
-        font-weight: bold;
-        text-shadow: 0 0 8px #4DD0E1;
-    }
-    .negative {
-        color: #FF4081;
-        font-size: 1.6em;
-        font-weight: bold;
-        text-shadow: 0 0 8px #FF4081;
-    }
-    .metric-box {
-        background: #141821;
-        border: 1px solid #2D3748;
-        border-radius: 12px;
-        text-align: center;
-        padding: 15px;
-        color: #EAEAEA;
-    }
-    .stTextArea textarea {
-        background-color: #141821 !important;
-        color: white !important;
-        border-radius: 10px;
-        border: 1px solid #4DD0E1;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-
-# -------------------------------
-# Header
-# -------------------------------
-st.markdown("<h1 class='title'>💬 Amazon Fine Food Reviews Sentiment Analysis</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>An intelligent NLP model built with Transfer Learning on a pre-trained Universal Sentence Encoder (USE) from TensorFlow Hub, designed to analyze review texts and predict whether the sentiment expressed is Positive 😊 or Negative 😠..</p>", unsafe_allow_html=True)
-
-# -------------------------------
-# User Input
-# -------------------------------
-user_input = st.text_area("✍️ Enter your review below:", height=150, placeholder="Example: The meal was absolutely fantastic, will definitely come again!")
-
-
-# -------------------------------
 # Prediction
 # -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
@@ -315,6 +195,7 @@ st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
