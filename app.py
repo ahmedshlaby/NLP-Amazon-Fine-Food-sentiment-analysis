@@ -237,15 +237,34 @@ st.markdown("<p class='subtitle'>An intelligent NLP model built with Transfer Le
 user_input = st.text_area("✍️ Enter your review below:", height=150, placeholder="Example: The meal was absolutely fantastic, will definitely come again!")
 
 
+# -------------------------------
 # Prediction
 # -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
 
     if user_input.strip():
-    input_data = tf.constant([user_input])
-    prediction = model.predict(input_data)[0][0]
-    sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
+        # Convert input to TensorFlow constant
+        input_data = tf.constant([user_input])
+        prediction = model.predict(input_data)[0][0]
+        sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
 
+        # Count metrics
+        word_count = len(user_input.split())
+        char_count = len(user_input)
+
+        # Show sentiment result
+        if prediction > 0.5:
+            st.markdown(f"""
+                <div class='result-card'>
+                    <p class='positive'>✅ {sentiment}</p>
+                </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+                <div class='result-card'>
+                    <p class='negative'>❌ {sentiment}</p>
+                </div>
+            """, unsafe_allow_html=True)
 
         # Confidence Gauge
         fig = go.Figure(go.Indicator(
@@ -263,7 +282,12 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
                 ],
             }
         ))
-        fig.update_layout(height=250, margin=dict(l=20, r=20, t=20, b=20), paper_bgcolor="#0E1117", font={'color': '#E1E1E1'})
+        fig.update_layout(
+            height=250,
+            margin=dict(l=20, r=20, t=20, b=20),
+            paper_bgcolor="#0E1117",
+            font={'color': '#E1E1E1'}
+        )
         st.plotly_chart(fig, use_container_width=True)
 
         # Metrics
@@ -273,7 +297,6 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
         with col2:
             st.markdown(f"<div class='metric-box'><h4>🔠 Characters</h4><h3>{char_count}</h3></div>", unsafe_allow_html=True)
 
-        st.markdown("</div>", unsafe_allow_html=True)
     else:
         st.warning("⚠️ Please enter a review before analyzing.")
 
@@ -292,6 +315,7 @@ st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
