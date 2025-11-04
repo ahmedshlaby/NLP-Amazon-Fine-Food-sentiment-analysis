@@ -122,9 +122,44 @@ user_input = st.text_area("✍️ Enter your review below:", height=150, placeho
 # -------------------------------
 if st.button("🚀 Analyze Sentiment", use_container_width=True):
     if user_input.strip():
-        input_data = tf.constant([user_input])
-        prediction = model.predict(input_data)[0][0]
-        sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
+        # --- Smart validation for meaningful input ---
+        clean_text = user_input.strip()
+    
+        # شرط: لازم على الأقل 3 كلمات
+        word_count = len(clean_text.split())
+    
+        # شرط: يكون فيه حروف مش أرقام فقط
+        has_letters = any(c.isalpha() for c in clean_text)
+    
+        # شرط: ما يكونش gibberish أو رموز
+        has_valid_chars = any(c.isalnum() for c in clean_text)
+    
+        if word_count < 3 or not has_letters or not has_valid_chars:
+            st.warning("⚠️ Please enter a meaningful review (at least a few words describing an experience).")
+        else:
+            # لو النص صالح للتحليل
+            input_data = tf.constant([user_input])
+            prediction = model.predict(input_data)[0][0]
+            sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
+    
+            # بقية الكود بتاعك هنا ...
+            if prediction > 0.5:
+                st.markdown(f"""
+                    <div class='result-card'>
+                        <h3 style='color:#4DD0E1;'>✅ Sentiment Prediction Result</h3>
+                        <p class='positive'>This review expresses a <b>Positive</b> opinion 😊</p>
+                    </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                    <div class='result-card'>
+                        <h3 style='color:#FF4081;'>❌ Sentiment Prediction Result</h3>
+                        <p class='negative'>This review conveys a <b>Negative</b> sentiment 😠</p>
+                    </div>
+                """, unsafe_allow_html=True)
+    
+            # Confidence gauge + metrics etc...
+
 
         word_count = len(user_input.split())
         char_count = len(user_input)
@@ -178,3 +213,4 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
