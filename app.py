@@ -141,24 +141,6 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
             input_data = tf.constant([user_input])
             prediction = model.predict(input_data)[0][0]
             sentiment = "😊 Positive" if prediction > 0.5 else "😠 Negative"
-    
-            # بقية الكود بتاعك هنا ...
-            if prediction > 0.5:
-                st.markdown(f"""
-                    <div class='result-card'>
-                        <h3 style='color:#4DD0E1;'>✅ Sentiment Prediction Result</h3>
-                        <p class='positive'>This review expresses a <b>Positive</b> opinion 😊</p>
-                    </div>
-                """, unsafe_allow_html=True)
-            else:
-                st.markdown(f"""
-                    <div class='result-card'>
-                        <h3 style='color:#FF4081;'>❌ Sentiment Prediction Result</h3>
-                        <p class='negative'>This review conveys a <b>Negative</b> sentiment 😠</p>
-                    </div>
-                """, unsafe_allow_html=True)
-    
-            # Confidence gauge + metrics etc...
 
 
         word_count = len(user_input.split())
@@ -213,4 +195,5 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
