@@ -187,14 +187,15 @@ if st.button("🚀 Analyze Sentiment", use_container_width=True):
             with col2:
                 st.markdown(f"<div class='metric-box'><h4>🔠 Characters</h4><h3>{char_count}</h3></div>", unsafe_allow_html=True)
     
-        else:
-            st.warning("⚠️ Please enter a review before analyzing.")
+    else:
+        st.warning("⚠️ Please enter a review before analyzing.")
 
 # -------------------------------
 # Footer
 # -------------------------------
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
+
 
 
 
