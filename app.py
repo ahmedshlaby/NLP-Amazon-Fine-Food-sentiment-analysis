@@ -190,14 +190,3 @@ st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b
 
 
 
-# -------------------------------
-# Footer
-# -------------------------------
-st.markdown("---")
-st.markdown("<p style='text-align:center;color:#888;'>© 2025 <b>Ahmed Shlaby</b> — Built with ❤️ using <b>Transfer Learning</b> on TensorFlow Hub (USE) and deployed via <b>Streamlit</b></p>", unsafe_allow_html=True)
-
-
-
-
-
-
